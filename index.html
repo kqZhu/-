@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>feedback用户满意度反馈</title>
+</head>
+
+<body>
+
+    <style>
+        .button-shadow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0 8px 16px rgba(32, 41, 50, 0.12);
+            mix-blend-mode: multiply;
+            transition: box-shadow .15s ease
+        }
+        
+        .sidebar_body {
+            position: fixed;
+            width: 280px;
+            height: 220px;
+            right: 10px;
+            bottom: 10px;
+            z-index: 100;
+            border-radius: 3px;
+            background-color: #fff;
+            box-shadow: 0 0 2px 1px #CDDDFF;
+        }
+        
+        .sidebar_title {
+            text-align: center;
+            padding: 10px;
+            margin: auto;
+            background-color: #ECF5FF;
+            color: #409EFF;
+            border-bottom: 1px solid #CDDDFF;
+            font-weight: 500;
+            font-size: 22px;
+            /* 文字间距 */
+            letter-spacing: 6px;
+        }
+        
+        .sidebar_main {
+            width: 100%;
+            display: table;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        
+        .star_origin {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            /* height: 25px; */
+            background: inherit;
+            /* overflow: hidden; */
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .tip {
+            color: #666;
+            font: 12px/1.5 Arial;
+            display: none;
+        }
+        
+        input {
+            margin: 0;
+        }
+        
+        #star {
+            position: relative;
+            width: 100%;
+        }
+        
+        #star ul,
+        #star span {
+            float: left;
+            display: inline;
+            height: 25px;
+            line-height: 20px;
+        }
+        
+        #star li {
+            float: left;
+            width: 25px;
+            cursor: pointer;
+            text-indent: -9999px;
+            background: url(star.png) no-repeat;
+        }
+        
+        #star li.on {
+            background-position: 0 -28px;
+        }
+        
+        #star ul {
+            margin: 0 10px;
+        }
+        
+        #star p {
+            position: absolute;
+            top: 13px;
+            width: 159px;
+            height: 60px;
+            background: url(icon.gif) no-repeat;
+            padding: 7px 10px 0;
+        }
+        /* 上面是 评分浮窗的背景图样式设置 */
+        
+        #star strong {
+            color: #f60;
+            padding-left: 10px;
+        }
+        
+        #star p em {
+            color: #f60;
+            display: block;
+            font-style: normal;
+        }
+        
+        #nameInput {
+            width: 80px;
+            height: 20px;
+            float: right;
+            margin-right: 10px;
+            background-color: #F4F4F5;
+            border: 0px;
+            text-align: center;
+        }
+        
+        .content_input {
+            width: 100%;
+            padding: 10px;
+            box-shadow: none;
+            border-radius: 3px;
+            background-color: #F4F4F5;
+            border: none;
+            min-height: 80px;
+            resize: none;
+            text-align: left;
+            z-index: 102;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+        }
+        
+        .btn_button {
+            color: #fff;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 3px;
+            background-color: #ECF5FF;
+            color: #409EFF;
+            /* 以下两行代码，让元素居中 */
+            display: block;
+            margin: 0 auto;
+            z-index: 102;
+        }
+        
+        .btn_button:active {
+            -webkit-transition: .2s all;
+            transition: .2s all;
+            -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+        }
+    </style>
+
+    <form method="POST" action="http://172.24.72.29:7777/api/feedback/add" target="notJump" id="jsForm" onsubmit="return returnToConfirm()" enctype="application/x-www-form-urlencoded">
+        <div class="sidebar_body">
+            <div class="sidebar_title">
+                用户反馈
+            </div>
+            <div class="sidebar_main">
+                <div class="star_origin">
+                    <div id="star">
+                        <ul>
+                            <li><a href="javascript:;">1</a></li>
+                            <li><a href="javascript:;">2</a></li>
+                            <li><a href="javascript:;">3</a></li>
+                            <li><a href="javascript:;">4</a></li>
+                            <li><a href="javascript:;">5</a></li>
+                        </ul>
+                        <input id="nameInput" name="username" type="text" placeholder="您的名字">
+                        <span></span>
+                        <p class="tip"></p>
+                    </div>
+                </div>
+
+                <div>
+                    <textarea id="content" name="content" class="content_input" placeholder="请输入您的建议..."></textarea>
+                </div>
+                <input type="hidden" name="score" id="score">
+                <input type="hidden" name="platform" id="platform">
+
+
+                <button type="submit" id="btn" name="tijiao" type="button" class="btn_button">提交</button>
+
+            </div>
+
+    </form>
+
+    <!-- 阻止form表单的提交 跳转到action中指定的url链接 -->
+    <iframe name="notJump" style="display:none"></iframe>
+
+    <!-- 引入js文件 -->
+    <script src="feedback.js" async></script>
+
+</body>
+
+</html>
